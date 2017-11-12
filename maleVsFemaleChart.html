@@ -1,0 +1,52 @@
+	<!doctype html>
+	<html>
+	<head>
+	    <script src="https://d3js.org/d3.v4.min.js"></script>
+	    <script src="CountriesLoader.js"></script>
+		<script src="BarChart.js"></script>	    
+	    <style>
+	        .male {
+	            fill: blue;
+	        }
+	        .female {
+	        	fill: red;
+	        }
+    	</style>
+	</head>
+
+	<body>
+		Country:
+		<select id="CountriesList" onchange="updateIds()"></select>
+		Age:
+		<select id="AgeList" onchange="updateIds()"></select>
+		Metric:
+		<select id="graphMetric" onchange="loadChart()">
+		  <option value="obese">Obesity</option>
+		  <option value="overweight">Overweight</option>
+		</select>
+		<br><br>				
+
+		<script>
+		// set the dimensions and margins of the graph
+		var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 1200 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
+
+		// set the ranges
+		var x = d3.scaleBand().range([0, width]);
+		var y = d3.scaleLinear().range([height, 0]);
+
+		// define the line
+		var valueline = d3.line()
+		    .x(function(d) { return x(d.year); })
+		    .y(function(d) { return y(d.mean); });
+
+		// append the svg obgect to the body of the page
+		// appends a 'group' element to 'svg'
+		var svgParent = d3.select("body").append("svg")
+		    .attr("width", width + margin.left + margin.right)
+		    .attr("height", height + margin.top + margin.bottom);
+		loadChart();
+		</script>
+	</body>
+	</html>
